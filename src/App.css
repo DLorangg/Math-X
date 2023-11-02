@@ -1,38 +1,59 @@
-.App {
+@font-face {
+  font-family: Inika-Bold;
+  src: url(fonts/Inika-Bold.ttf);
+}
+
+html{
+  overflow-y: hidden;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
   text-align: center;
+  height: 7vh;
+  background-color: #421E86;
+  font-family: Inika-Bold;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar p{
+  font-size: 32px;
+  color: #ffffff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.main{
+  background-color: #3259B3;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  font-family: Inter;
 }
 
-.App-link {
-  color: #61dafb;
+input {
+  border-radius: 20px;
+  font-size: 20px;  
+  color: dimgray;
+  margin-right: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 600px;
+  height: 70px;
+  text-indent: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button{
+  border-radius: 20px;
+  font-size: 20px;  
+  color: dimgray;
+  margin-right: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 150px;
+  height: 70px;
 }
