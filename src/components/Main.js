@@ -131,7 +131,7 @@ class Calculator extends Component {
         
         {/* Muestra el resultado si está disponible */}
         {this.state.result && (
-          <p className='result'>Resultado: {this.state.result}</p>
+          <p className='result'>Resultado: <span className="result-value">{this.state.result}</span></p>
         )}
       </div>
     );
