@@ -113,6 +113,6 @@ p.result {
 }
 
 .result-value {
-  color: rgb(red, green, blue); 
+  color: #421E86; 
   font-weight: bold;
 }
