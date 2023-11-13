@@ -66,12 +66,33 @@ input {
   border: none;
 }
 
+.keyboard-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.keyboard-container button {
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.keyboard-container button:hover {
+  background-color: #e0e0e0;
+}
 
 .resolver {
   border-radius: 20px;
   font-size: 20px;
   color: dimgray;
-  margin-right: 10px;
+  margin-right: 15px;
+  margin-left: 10px;
   padding: 10px;
   box-sizing: border-box;
   width: 150px;

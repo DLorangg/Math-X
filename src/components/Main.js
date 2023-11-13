@@ -1,67 +1,73 @@
-//Importaciones
 import React, { Component } from 'react';
-import * as math from 'mathjs';
-import keyboardSvg from '../assets/keyboard-solid.svg';
+import * as math from 'mathjs';  // Importa la librería math.js para cálculos matemáticos
+import keyboardSvg from '../assets/keyboard-solid.svg';  // Importa imágenes para los botones del teclado
+import arrowLeftSvg from '../assets/arrow-left-solid.svg';
+import arrowRightSvg from '../assets/arrow-right-solid.svg';
+import deleteSvg from '../assets/delete-left-solid.svg';
 
-//Definicion del objeto Calculator
 class Calculator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
-      result: '', //Valor vacio al resultado
-      showKeyboard: false,
-      cursorPosition: 0,
+      input: '',          // Almacena la expresión matemática ingresada por el usuario
+      result: '',         // Almacena el resultado del cálculo
+      showKeyboard: false, // Indica si se debe mostrar el teclado virtual
+      cursorPosition: 0,   // Almacena la posición del cursor en la entrada del usuario
     };
   }
 
+  // Maneja el cambio en la entrada del usuario
   handleInputChange = (e) => {
     const inputValue = e.target.value;
-    // Usar una expresión regular para permitir solo dígitos y caracteres matemáticos (+, -, *, /)
-    const sanitizedInput = inputValue.replace(/[^0-9+\-*/]/g, '');
-    this.setState({ input: sanitizedInput });
+    this.setState({ input: inputValue });
   }
 
-  //Usando la libreria mathjs para calcular
+  // Maneja el cálculo cuando se presiona el botón "Resolver"
   handleCalculate = () => {
     try {
-      const result = math.evaluate(this.state.input);
+      // Reemplaza el símbolo de la raíz cuadrada por el formato adecuado para el cálculo
+      const inputWithSqrt = this.state.input.replace(/√([0-9.]+)/g, 'sqrt($1)');
+      
+      // Calcular el resultado utilizando math.js
+      const result = math.evaluate(inputWithSqrt);
+
+      // Mostrar el resultado
       this.setState({ result });
     } catch (error) {
       this.setState({ result: 'Error' });
     }
   }
 
-  //Funcion para mostrar y ocultar teclado
+  // Muestra u oculta el teclado virtual
   toggleKeyboard = () => {
     this.setState({ showKeyboard: !this.state.showKeyboard });
   }
 
-  //Guardar posicion en input
+  // Agrega un símbolo en la posición del cursor en la entrada del usuario
   appendSymbol = (symbol) => {
     const { input, cursorPosition } = this.state;
     const updatedInput = input.slice(0, cursorPosition) + symbol + input.slice(cursorPosition);
     this.setState({
       input: updatedInput,
-      cursorPosition: cursorPosition + 1,
+      cursorPosition: cursorPosition + symbol.length,
     });
   }
 
-  //Mover cursor a la izquierda
+  // Mueve el cursor a la izquierda en la entrada del usuario
   moveCursorLeft = () => {
     this.setState((prevState) => ({
       cursorPosition: Math.max(prevState.cursorPosition - 1, 0),
     }));
   }
 
-  //Mover cursor a la derecha
+  // Mueve el cursor a la derecha en la entrada del usuario
   moveCursorRight = () => {
     this.setState((prevState) => ({
       cursorPosition: Math.min(prevState.cursorPosition + 1, prevState.input.length),
     }));
   }
 
-  //Borrar caracter
+  // Borra un carácter en la posición del cursor en la entrada del usuario
   deleteCharacter = () => {
     const { input, cursorPosition } = this.state;
     if (cursorPosition > 0) {
@@ -74,7 +80,7 @@ class Calculator extends Component {
   }
 
   render() {
-    const { input, showKeyboard, cursorPosition } = this.state;
+    const { input, showKeyboard } = this.state;
 
     return (
       <div className='main'>
@@ -90,6 +96,7 @@ class Calculator extends Component {
         </div>
         {showKeyboard && (
           <div className='keyboard-container'>
+            {/* Botones para números y operadores */}
             <button onClick={() => this.appendSymbol('1')}>1</button>
             <button onClick={() => this.appendSymbol('2')}>2</button>
             <button onClick={() => this.appendSymbol('3')}>3</button>
@@ -104,12 +111,25 @@ class Calculator extends Component {
             <button onClick={() => this.appendSymbol('-')}>-</button>
             <button onClick={() => this.appendSymbol('*')}>*</button>
             <button onClick={() => this.appendSymbol('/')}>/</button>
-            <button onClick={this.moveCursorLeft}>{'<'}</button>
-            <button onClick={this.moveCursorRight}>{'>'}</button>
-            <button onClick={this.deleteCharacter}>Borrar</button>
+
+            {/* Botones para funciones adicionales */}
+            <button onClick={this.moveCursorLeft}>
+              <img src={arrowLeftSvg} alt="Mover Izquierda" />
+            </button>
+            <button onClick={this.moveCursorRight}>
+              <img src={arrowRightSvg} alt="Mover Derecha" />
+            </button>
+            <button onClick={this.deleteCharacter}>
+              <img src={deleteSvg} alt="Borrar" />
+            </button>
+            <button onClick={() => this.appendSymbol('^')}>^</button>
+            <button onClick={() => this.appendSymbol('√')}>√</button>
           </div>
         )}
+        {/* Botón para calcular */}
         <button className="resolver" onClick={this.handleCalculate}>Resolver</button>
+        
+        {/* Muestra el resultado si está disponible */}
         {this.state.result && (
           <p className='result'>Resultado: {this.state.result}</p>
         )}
